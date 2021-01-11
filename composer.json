@@ -1,0 +1,33 @@
+{
+  "name": "beaniegel/image-saver",
+  "description": "CLI app that handles image storage, retrieval and deletion",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "beaniegel",
+      "email": "mail@jelena.io"
+    }
+  ],
+  "require": {
+    "symfony/console": "^5.2",
+    "ext-fileinfo": "*",
+    "symfony/uid": "^5.2",
+    "psr/log": "^1.1",
+    "monolog/monolog": "^2.2"
+  },
+  "require-dev": {
+    "behat/behat": "^3.8",
+    "phpunit/phpunit": "^9",
+    "friendsofphp/php-cs-fixer": "^2.17"
+  },
+  "autoload": {
+    "psr-4": {
+      "Beaniegel\\ImageStorage\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Beaniegel\\ImageStorage\\Tests\\": "tests/"
+    }
+  }
+}

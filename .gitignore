@@ -1,0 +1,5 @@
+.DS_Store
+/.idea/
+/vendor/
+.php_cs.cache
+*.log

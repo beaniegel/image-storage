@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+
+use Beaniegel\ImageStorage\Command\DeleteImageCommand;
+use Beaniegel\ImageStorage\Command\RetrieveImageCommand;
+use Beaniegel\ImageStorage\Command\SaveImageCommand;
+use Beaniegel\ImageStorage\Config;
+use Monolog\Logger;
+use Symfony\Component\Console\Application;
+
+define('BASE_DIR', dirname(__DIR__).'/');
+
+$application = new Application();
+$logger = new Logger('image-storage');
+$config = new Config(include BASE_DIR.'config.php');
+
+$application->add(new SaveImageCommand($config, $logger));
+$application->add(new RetrieveImageCommand($config, $logger));
+$application->add(new DeleteImageCommand($config, $logger));
+
+$application->run();

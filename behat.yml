@@ -1,0 +1,4 @@
+default:
+  suites:
+    default:
+      contexts: [Beaniegel\ImageStorage\Tests\Functional\FeatureContext]
