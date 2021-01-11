@@ -7,11 +7,9 @@ use Beaniegel\ImageStorage\Tests\Factory\ConfigFactory;
 use Behat\Behat\Context\Context;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use PHPUnit\Framework\Assert;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use PHPUnit\Framework\Assert;
-
-define('BASE_DIR', dirname(__DIR__, 2).'/');
 
 /**
  * Defines application features from the specific context.
@@ -29,9 +27,8 @@ class FeatureContext implements Context
     {
         $logger = new Logger('functional-test-storage');
         $config = ConfigFactory::create();
-        $this->source = BASE_DIR.'tests/tmp/';
+        $this->source = 'tests/tmp/';
         $this->destination = $config->getDestination();
-        throw new \Exception(BASE_DIR.$this->destination);
         $app = new Application();
 
         $logger->pushHandler(new StreamHandler('test.log', Logger::WARNING));
@@ -47,7 +44,7 @@ class FeatureContext implements Context
      */
     public function isALocalFile(string $path): void
     {
-        Assert::assertTrue(\copy(BASE_DIR.'tests/assets/'.$path, $this->source.$path));
+        Assert::assertTrue(copy(__DIR__.'/../assets/'.$path, $this->source.$path));
     }
 
     /**
@@ -65,12 +62,11 @@ class FeatureContext implements Context
      */
     public function theApplicationDisplaysAValidImagePath(): void
     {
-        $newImagePath = $this->commandTester->getDisplay();
-        $fullPath = $this->destination.$newImagePath;
-        throw new \Exception($fullPath);
-        Assert::assertFileExists($fullPath);
-        $type = mime_content_type($fullPath);
-        Assert::assertStringStartsWith('image/',$type);
+        $newImagePath = rtrim($this->commandTester->getDisplay());
+        $fullImagePath = __DIR__.'/../storage/'.$newImagePath;
+        Assert::assertFileExists($fullImagePath);
+        $type = mime_content_type($fullImagePath);
+        Assert::assertStringStartsWith('image/', $type);
     }
 
     /**
@@ -102,17 +98,17 @@ class FeatureContext implements Context
      */
     public function afterScenario(): void
     {
-//        \array_map('unlink', glob($this->source.'*'));
-//        \array_map('unlink', glob($this->destination.'*'));
-//        rmdir($this->source);
-//        rmdir($this->destination);
+        \array_map('unlink', glob($this->source.'*'));
+        \array_map('unlink', glob($this->destination.'*'));
+        rmdir($this->source);
+        rmdir($this->destination);
     }
 
     private function createMissingDirectories()
     {
-        $directories = array($this->source, $this->destination);
+        $directories = [$this->source, $this->destination];
 
-        foreach($directories as $directory) {
+        foreach ($directories as $directory) {
             if (!file_exists($directory)) {
                 mkdir($directory);
             }

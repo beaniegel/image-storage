@@ -4,7 +4,6 @@ namespace Beaniegel\ImageStorage\Command;
 
 use Beaniegel\ImageStorage\Config;
 use Beaniegel\ImageStorage\ImageStorage;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

@@ -4,7 +4,6 @@ namespace Beaniegel\ImageStorage\Command;
 
 use Beaniegel\ImageStorage\Config;
 use Beaniegel\ImageStorage\ImageStorage;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -37,11 +36,12 @@ final class RetrieveImageCommand extends Command
     {
         $imageStorage = new ImageStorage($this->config, $this->logger);
 
-        try{
+        try {
             $image = $imageStorage->retrieve($input->getArgument('path'));
             $output->write($image->base64Encoded());
         } catch (\InvalidArgumentException $err) {
             $output->writeln('Error: '.$err->getMessage());
+
             return Command::FAILURE;
         }
 

@@ -6,12 +6,12 @@ use Psr\Log\LoggerInterface;
 
 final class LocalFileSystem implements FileSystem
 {
-    protected LoggerInterface $logger;
+    private LoggerInterface $logger;
     private string $destinationDirectory;
 
     public function __construct(string $destinationDirectory, LoggerInterface $logger)
     {
-        $this->destinationDirectory = BASE_DIR.$destinationDirectory;
+        $this->destinationDirectory = $destinationDirectory;
         $this->logger = $logger;
     }
 

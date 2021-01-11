@@ -10,7 +10,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class ImageStorage
 {
-    protected LoggerInterface $logger;
+    private LoggerInterface $logger;
     private FileSystem $fileSystem;
 
     public function __construct(Config $config, LoggerInterface $logger)
@@ -75,12 +75,13 @@ final class ImageStorage
 
     private function validateImage(string $path): void
     {
-        if (!file_exists(BASE_DIR.$path)) {
-            $this->logger->alert('image not found: '.BASE_DIR.$path);
+        $fullPath = __DIR__.'/../'.$path;
+        if (!file_exists($fullPath)) {
+            $this->logger->alert('image not found: '.$fullPath);
             throw new InvalidArgumentException('image not found');
         }
 
-        $mimeContentType = mime_content_type(BASE_DIR.$path);
+        $mimeContentType = mime_content_type($fullPath);
         $imageIsInvalid = 'image/' !== substr($mimeContentType, 0, 6);
 
         if ($imageIsInvalid) {

@@ -5,7 +5,6 @@ namespace Beaniegel\ImageStorage\Command;
 use Beaniegel\ImageStorage\Config;
 use Beaniegel\ImageStorage\ImageStorage;
 use InvalidArgumentException;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -43,6 +42,7 @@ final class SaveImageCommand extends Command
             $output->writeln($imagePath);
         } catch (InvalidArgumentException $err) {
             $output->writeln('Error: '.$err->getMessage());
+
             return Command::FAILURE;
         }
 

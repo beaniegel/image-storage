@@ -12,8 +12,6 @@ use Monolog\Logger;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-\define('BASE_DIR', \dirname(__DIR__, 2).'/');
-
 /**
  * @covers \Beaniegel\ImageStorage\ImageStorage;
  */
@@ -26,8 +24,8 @@ final class ImageStorageTest extends TestCase
     protected function setUp(): void
     {
         $config = ConfigFactory::create();
-        $logger = New Logger('unit-test-storage');
-        $logger->pushHandler(new StreamHandler(BASE_DIR.'test.log', Logger::WARNING));
+        $logger = new Logger('unit-test-storage');
+        $logger->pushHandler(new StreamHandler('test.log', Logger::WARNING));
         $this->imageStorage = new ImageStorage($config, $logger);
         $this->source = 'tests/tmp/';
         $this->destination = $config->getDestination();
@@ -44,7 +42,7 @@ final class ImageStorageTest extends TestCase
         $storedImage = file_get_contents($this->destination.$storedPath);
 
         Assert::assertFileDoesNotExist($path);
-        Assert::assertfileExists($this->destination.$storedPath);
+        Assert::assertFileExists($this->destination.$storedPath);
         Assert::assertSame($image, $storedImage);
     }
 
@@ -96,7 +94,7 @@ final class ImageStorageTest extends TestCase
 
     private function createImagePath($assetName): string
     {
-        $assetPath = BASE_DIR.'tests/assets/'.$assetName;
+        $assetPath = __DIR__.'/../assets/'.$assetName;
         $tmpPath = $this->source.$assetName;
 
         copy($assetPath, $tmpPath);
