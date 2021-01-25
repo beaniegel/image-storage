@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Beaniegel\ImageStorage\Tests\Functional;
 
 use Beaniegel\ImageStorage\Command\SaveImageCommand;
@@ -90,7 +92,7 @@ class FeatureContext implements Context
      */
     public function theApplicationDisplays($output)
     {
-        Assert::assertSame($output.PHP_EOL, $this->commandTester->getDisplay());
+        Assert::assertSame($output.\PHP_EOL, $this->commandTester->getDisplay());
     }
 
     /**
@@ -98,8 +100,8 @@ class FeatureContext implements Context
      */
     public function afterScenario(): void
     {
-        \array_map('unlink', glob($this->source.'*'));
-        \array_map('unlink', glob($this->destination.'*'));
+        array_map('unlink', glob($this->source.'*'));
+        array_map('unlink', glob($this->destination.'*'));
         rmdir($this->source);
         rmdir($this->destination);
     }

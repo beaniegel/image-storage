@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Beaniegel\ImageStorage\Command;
 
 use Beaniegel\ImageStorage\Config;

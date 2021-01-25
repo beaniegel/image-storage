@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Beaniegel\ImageStorage;
 
 final class Image
